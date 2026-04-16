@@ -1,4 +1,4 @@
-# mySoft
+# LibreRent
 
 
 ![GitHub Release](https://img.shields.io/github/v/release/crum6le/librerent)
