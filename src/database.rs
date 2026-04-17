@@ -7,7 +7,7 @@ mod inner {
         thread_local! {
 
             pub static DB: rusqlite::Connection = {
-                Connection::open("database/mysoft.db").expect("Failed to open database")
+                Connection::open("database/librerent.db").expect("Failed to open database")
             };
         }
 

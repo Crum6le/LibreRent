@@ -11,7 +11,7 @@ pub async fn check_password(username: String, password: String) -> Result<(bool,
 
     use sha3::{Digest, Sha3_512};
 
-    let conn = Connection::open("database/mysoft.db").expect("Failed to open Database");
+    let conn = Connection::open("database/librerent.db").expect("Failed to open Database");
 
     let mut hasher = Sha3_512::new();
 

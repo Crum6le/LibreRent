@@ -116,7 +116,7 @@ fn Home() -> Element {
                         },
                         span {
                             class: "self-center text-lg text-heading font-semibold whitespace-nowrap dark:text-purple-600 text-orange-500",
-                            "MySoft"
+                            "LibreRent"
                         }
 
                     },
