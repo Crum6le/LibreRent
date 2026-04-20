@@ -58,6 +58,9 @@ fn Home() -> Element {
     let mut sidebar = use_signal(|| String::new());
     let mut sidebar_bg = use_signal(|| true);
 
+    let version = env!("CARGO_PKG_VERSION");
+
+
     let mut site = use_signal(|| 0);
 
     const LOGO: Asset = asset!("/assets/favicon.png");
@@ -260,7 +263,7 @@ fn Home() -> Element {
                     }
                     p {
                         class: "dark:text-gray-500 text-gray-900 bottom-0 fixed right-0 p-2 text-xs",
-                        "Beta V0.0.0" //TODO Set Version from DB
+                        "Beta V{version}"
                     }
                 }
 

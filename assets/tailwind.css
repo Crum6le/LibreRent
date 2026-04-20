@@ -263,6 +263,9 @@
   .mb-10 {
     margin-bottom: calc(var(--spacing) * 10);
   }
+  .contents {
+    display: contents;
+  }
   .flex {
     display: flex;
   }
