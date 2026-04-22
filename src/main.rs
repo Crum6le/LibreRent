@@ -6,6 +6,7 @@ mod inventory_element;
 mod login;
 mod user;
 
+use crate::init::InitPage;
 use crate::inventory_element::Inventory;
 use crate::login::logout;
 use crate::login::LoginPage;
@@ -18,6 +19,8 @@ enum Route {
     Home {},
     #[route("/login")]
     LoginPage {},
+    #[route("/init")]
+    InitPage {},
 }
 
 const FAVICON: Asset = asset!("/assets/favicon.png");
@@ -59,7 +62,6 @@ fn Home() -> Element {
     let mut sidebar_bg = use_signal(|| true);
 
     let version = env!("CARGO_PKG_VERSION");
-
 
     let mut site = use_signal(|| 0);
 

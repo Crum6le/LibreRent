@@ -1,7 +1,4 @@
-use dioxus::{
-    fullstack::*,
-    prelude::*,
-};
+use dioxus::{fullstack::*, prelude::*};
 use serde::*;
 
 #[cfg(feature = "server")]
@@ -37,14 +34,14 @@ pub fn LoginPage() -> Element {
                         println!("set to");
                         //response.set(login(Form(values)).await.unwrap());
 
-                        spawn(async move {
+                        //spawn(async move {
                             let _res = login(Form(values)).await.unwrap();
                             response.set(_res);
 
                             if *response.read() {
                                 _ = nav.replace(Route::Home {});
                             }
-                        });
+                        //});
 
 
                     },
@@ -72,7 +69,7 @@ async fn login(form: Form<LoginForm>) -> Result<bool> {
         .await
         .expect("Password Checker failed");
 
-    if !res.0  {
+    if !res.0 {
         println!("Passwort Falsch");
         return Ok(false);
     } else if res.0 {
