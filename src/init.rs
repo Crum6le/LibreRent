@@ -67,7 +67,7 @@ pub fn InitPage() -> Element {
                                     } else {
                                         println!("{err}");
                                         "¯\\_(ツ)_/¯".to_string()
-                                    }); //BUG Error Print is not "beautiful"
+                                    }); //BUG this returns last option: probably turns everything into captured error with string and loses type 
                                 }
                             }
 
