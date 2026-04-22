@@ -8,6 +8,8 @@ mod inner {
         use dioxus::Result;
         use rand::Rng;
         use rusqlite::Connection;
+
+        use crate::database::UserAlreadyTakenError;
         thread_local! {
 
             pub static DB: rusqlite::Connection = {
@@ -75,7 +77,7 @@ mod inner {
                     Err(error) => println!("Insert failed: {}", error),
                 };
             } else {
-                return Err(CapturedError::msg("Username or email already taken."));
+                return Err(CapturedError::new(UserAlreadyTakenError));
             }
             Ok(())
         }
@@ -83,3 +85,12 @@ mod inner {
 }
 
 pub use inner::*;
+
+#[derive(Debug)]
+pub struct UserAlreadyTakenError;
+impl core::fmt::Display for UserAlreadyTakenError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "User already taken.")
+    }
+}
+impl core::error::Error for UserAlreadyTakenError {}

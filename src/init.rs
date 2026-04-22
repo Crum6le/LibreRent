@@ -1,3 +1,5 @@
+use core::ops::Deref;
+
 use dioxus::{fullstack::*, prelude::*, CapturedError};
 use serde::*;
 
@@ -5,7 +7,7 @@ const BG_IMAGE: Asset = asset!("/assets/login/bg.png");
 
 #[cfg(feature = "server")]
 use crate::database::user_db::*;
-use crate::Route;
+use crate::{database::UserAlreadyTakenError, Route};
 
 #[cfg(feature = "server")]
 use axum_session::{Session, SessionNullPool};
@@ -59,7 +61,13 @@ pub fn InitPage() -> Element {
                             } else {
                                 if let Err(err) = init_user(values.username, values.email, values.password).await{
                                     response_bool.set(false);
-                                    response.set(format!("{err}")); //BUG Error Print is not "beautiful"
+                                    let err = err.into_inner().unwrap();
+                                    response.set(if err.is::<UserAlreadyTakenError>() {
+                                        "Username or Password already taken".to_string()
+                                    } else {
+                                        println!("{err}");
+                                        "¯\\_(ツ)_/¯".to_string()
+                                    }); //BUG Error Print is not "beautiful"
                                 }
                             }
 
@@ -95,5 +103,5 @@ pub fn InitPage() -> Element {
 
 #[post("/init/user", session: Session<SessionNullPool>)]
 async fn init_user(username: String, email: String, password: String) -> Result<()> {
-    create_new_user(&username, &email, &password).map_err(CapturedError::from)
+    create_new_user(&username, &email, &password)
 }
