@@ -7,7 +7,7 @@ const BG_IMAGE: Asset = asset!("/assets/login/bg.png");
 
 #[cfg(feature = "server")]
 use crate::database::user_db::*;
-use crate::{database::UserAlreadyTakenError, Route};
+use crate::Route;
 
 #[cfg(feature = "server")]
 use axum_session::{Session, SessionNullPool};
@@ -62,12 +62,8 @@ pub fn InitPage() -> Element {
                                 if let Err(err) = init_user(values.username, values.email, values.password).await{
                                     response_bool.set(false);
                                     let err = err.into_inner().unwrap();
-                                    response.set(if err.is::<UserAlreadyTakenError>() {
-                                        "Username or Password already taken".to_string()
-                                    } else {
-                                        println!("{err}");
-                                        "¯\\_(ツ)_/¯".to_string()
-                                    }); //BUG this returns last option: probably turns everything into captured error with string and loses type 
+                                    response.set(err.to_string());
+                                         //BUG error message is not only the message but with further details around it...
                                 }
                             }
 
